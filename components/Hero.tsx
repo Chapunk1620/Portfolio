@@ -7,6 +7,28 @@ import { personalInfo } from "@/lib/data";
 
 const ParticleBackground = dynamic(() => import("./ParticleBackground"), { ssr: false });
 
+function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const duration = 1500;
+    const step = Math.ceil(end / (duration / 16));
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [end]);
+
+  return <>{count}{suffix}</>;
+}
+
 function Typewriter({ text, speed = 50 }: { text: string; speed?: number }) {
   const [displayed, setDisplayed] = useState("");
 
@@ -93,6 +115,32 @@ export default function Hero() {
           </a>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 1.2 }}
+        className="flex items-center justify-center gap-8 md:gap-14 mt-16"
+      >
+        {[
+          { label: "Projects", value: 5 },
+          { label: "Experience", value: "2+", suffix: " yrs" },
+          { label: "Tech Stack", value: 20, suffix: "+" },
+        ].map((stat) => (
+          <div key={stat.label} className="text-center">
+            <div className="text-2xl md:text-3xl font-bold text-accent-red font-mono">
+              {typeof stat.value === "number" ? (
+                <CountUp end={stat.value} suffix={stat.suffix || ""} />
+              ) : (
+                stat.value
+              )}
+            </div>
+            <div className="text-xs text-text-muted mt-1 uppercase tracking-wider">
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}

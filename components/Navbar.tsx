@@ -14,11 +14,32 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+
+    const sections = navLinks
+      .map((l) => document.getElementById(l.href.slice(1)))
+      .filter(Boolean);
+
+    sections.forEach((s) => s && observer.observe(s));
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      sections.forEach((s) => s && observer.unobserve(s));
+    };
   }, []);
 
   return (
@@ -50,7 +71,11 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-text-muted hover:text-accent-red transition-colors duration-200 text-sm font-medium"
+                className={`transition-colors duration-200 text-sm font-medium ${
+                  activeSection === link.href.slice(1)
+                    ? "text-accent-red"
+                    : "text-text-muted hover:text-accent-red"
+                }`}
               >
                 {link.label}
               </a>
@@ -73,7 +98,11 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="text-text-muted hover:text-accent-red transition-colors text-sm font-medium"
+                    className={`transition-colors text-sm font-medium ${
+                      activeSection === link.href.slice(1)
+                        ? "text-accent-red"
+                        : "text-text-muted hover:text-accent-red"
+                    }`}
                   >
                     {link.label}
                   </a>

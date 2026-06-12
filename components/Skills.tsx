@@ -62,6 +62,22 @@ const categoryColors: Record<string, string> = {
   "DevOps & Tools": "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
 };
 
+const proficiencies: Record<string, number> = {
+  Languages: 90,
+  Frontend: 95,
+  Backend: 85,
+  Databases: 80,
+  "DevOps & Tools": 75,
+};
+
+const barColors: Record<string, string> = {
+  Languages: "bg-blue-500",
+  Frontend: "bg-green-500",
+  Backend: "bg-purple-500",
+  Databases: "bg-yellow-500",
+  "DevOps & Tools": "bg-cyan-500",
+};
+
 export default function Skills() {
   return (
     <section id="skills" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-20">
@@ -89,9 +105,21 @@ export default function Skills() {
             transition={{ duration: 0.5, delay: catIndex * 0.1 }}
             className="bg-dark-surface rounded-card p-6"
           >
-            <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-4">
-              {category}
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider">
+                {category}
+              </h3>
+              <span className="text-xs font-mono text-text-muted">{proficiencies[category]}%</span>
+            </div>
+            <div className="h-1.5 rounded-full bg-dark mb-5 overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${proficiencies[category]}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                className={`h-full rounded-full ${barColors[category]}`}
+              />
+            </div>
             <div className="flex flex-wrap gap-2">
               {items.map((skill) => {
                 const Icon = iconMap[skill];

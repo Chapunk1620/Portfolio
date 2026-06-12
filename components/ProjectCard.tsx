@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTilt } from "./useTilt";
 
 interface ProjectCardProps {
   title: string;
@@ -19,15 +20,20 @@ export default function ProjectCard({
   index,
   onClick,
 }: ProjectCardProps) {
+  const tilt = useTilt(10);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -5 }}
+      className="group bg-dark-surface rounded-card p-6 border border-transparent hover:border-accent-red/20 transition-colors duration-300 hover:shadow-[0_0_30px_rgba(233,69,96,0.15)] cursor-pointer"
+      style={{ transition: "transform 0.15s ease-out" }}
+      ref={tilt.ref}
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
       onClick={onClick}
-      className="group bg-dark-surface rounded-card p-6 border border-transparent hover:border-accent-red/20 transition-all duration-300 hover:shadow-[0_0_30px_rgba(233,69,96,0.15)] cursor-pointer"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="w-10 h-10 rounded-lg bg-accent-red/10 flex items-center justify-center text-accent-red text-lg">
