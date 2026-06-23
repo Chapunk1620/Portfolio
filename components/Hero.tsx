@@ -70,7 +70,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+          className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight"
         >
           {personalInfo.name}
         </motion.h1>
@@ -120,7 +120,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 1.2 }}
-        className="flex items-center justify-center gap-8 md:gap-14 mt-16"
+        className="flex items-center justify-center gap-8 md:gap-14 mt-10 md:mt-16"
       >
         {[
           { label: "Projects", value: 5 },

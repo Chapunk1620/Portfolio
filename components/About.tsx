@@ -5,7 +5,7 @@ import { personalInfo } from "@/lib/data";
 
 export default function About() {
   return (
-    <section id="about" className="py-24 px-6 max-w-4xl mx-auto scroll-mt-20">
+    <section id="about" className="py-16 md:py-24 px-6 max-w-4xl mx-auto scroll-mt-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

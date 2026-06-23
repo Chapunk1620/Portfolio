@@ -41,7 +41,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 alt={project.title}
                 width={800}
                 height={500}
-                className="w-full h-56 object-cover rounded-t-card"
+                className="w-full h-48 md:h-56 object-cover rounded-t-card"
               />
               <button
                 onClick={onClose}

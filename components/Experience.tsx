@@ -40,7 +40,7 @@ function TimelineItem({ company, role, period, achievements, index }: TimelineIt
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 px-6 bg-dark-surface/50 scroll-mt-20">
+    <section id="experience" className="py-16 md:py-24 px-6 bg-dark-surface/50 scroll-mt-20">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

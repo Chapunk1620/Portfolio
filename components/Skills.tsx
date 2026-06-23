@@ -80,7 +80,7 @@ const barColors: Record<string, string> = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-20">
+    <section id="skills" className="py-16 md:py-24 px-6 max-w-6xl mx-auto scroll-mt-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

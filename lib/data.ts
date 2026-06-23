@@ -88,7 +88,7 @@ export const projects = [
     description:
       "Admin system digitizing employee form requests and time tracking with automated approval workflows.",
     details:
-      "A digital transformation platform that replaced paper-based employee request forms and manual time tracking. Enables employees to submit various request types digitally, log工作时间 with automatic calculation, track approval status in real-time, and generates automated reports for HR and management.",
+      "A digital transformation platform that replaced paper-based employee request forms and manual time tracking. Enables employees to submit various request types digitally, log working hours with automatic calculation, track approval status in real-time, and generates automated reports for HR and management.",
     screenshot: "https://placehold.co/800x500/1a1a2e/e94560?text=Admin+Workflow+System",
     github: "https://github.com/Chapunk1620/administrativeSystem",
   },

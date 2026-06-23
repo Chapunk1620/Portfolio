@@ -10,7 +10,7 @@ export default function Projects() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   return (
-    <section id="projects" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-20">
+    <section id="projects" className="py-16 md:py-24 px-6 max-w-6xl mx-auto scroll-mt-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

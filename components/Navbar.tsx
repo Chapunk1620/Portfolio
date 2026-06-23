@@ -98,7 +98,7 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className={`transition-colors text-sm font-medium ${
+                    className={`block py-2 transition-colors text-sm font-medium ${
                       activeSection === link.href.slice(1)
                         ? "text-accent-red"
                         : "text-text-muted hover:text-accent-red"
