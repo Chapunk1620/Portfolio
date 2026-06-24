@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,17 +11,17 @@ const config: Config = {
     extend: {
       colors: {
         dark: {
-          DEFAULT: "#0f0f1a",
-          surface: "#1a1a2e",
+          DEFAULT: "rgb(var(--color-bg-primary) / <alpha-value>)",
+          surface: "rgb(var(--color-bg-surface) / <alpha-value>)",
           mid: "#16213e",
         },
         accent: {
-          red: "#e94560",
+          red: "rgb(var(--color-accent-red) / <alpha-value>)",
           blue: "#0f3460",
         },
         text: {
-          primary: "#e8e8e8",
-          muted: "#888",
+          primary: "rgb(var(--color-text-primary) / <alpha-value>)",
+          muted: "rgb(var(--color-text-muted) / <alpha-value>)",
         },
       },
       fontFamily: {
@@ -32,12 +33,12 @@ const config: Config = {
         button: "8px",
       },
       animation: {
-        "pulse-glow": "pulseGlow 2s ease-in-out infinite",
+        "pulse-skeleton": "pulseSkeleton 1.5s ease-in-out infinite",
       },
       keyframes: {
-        pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 20px rgba(233, 69, 96, 0.3)" },
-          "50%": { boxShadow: "0 0 40px rgba(233, 69, 96, 0.6)" },
+        pulseSkeleton: {
+          "0%, 100%": { opacity: "0.3" },
+          "50%": { opacity: "0.6" },
         },
       },
     },

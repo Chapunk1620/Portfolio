@@ -2,12 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-bg-primary: 250, 248, 245;
+  --color-bg-surface: 255, 255, 255;
+  --color-text-primary: 45, 45, 45;
+  --color-text-muted: 119, 119, 119;
+  --color-accent-red: 194, 58, 75;
+}
+
+:root.dark {
+  --color-bg-primary: 15, 15, 26;
+  --color-bg-surface: 26, 26, 46;
+  --color-text-primary: 232, 232, 232;
+  --color-text-muted: 136, 136, 136;
+  --color-accent-red: 233, 69, 96;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   @apply bg-dark text-text-primary font-sans;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: rgb(var(--color-accent-red));
+  color: white;
 }
 
 ::-webkit-scrollbar {
@@ -20,5 +42,26 @@ body {
   @apply bg-dark-surface rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent-red/30;
+  background-color: color-mix(in srgb, var(--color-accent-red) 30%, transparent);
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(var(--color-accent-red), 0.3); }
+  50% { box-shadow: 0 0 40px rgba(var(--color-accent-red), 0.6); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseSkeleton {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
