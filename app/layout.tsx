@@ -56,6 +56,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`scroll-smooth dark ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem("theme");if(t==="light"){document.documentElement.classList.remove("dark")}})()`
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
