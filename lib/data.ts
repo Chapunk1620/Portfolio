@@ -49,7 +49,7 @@ export const projects = [
       "Full-stack system to track and manage company asset borrowing with real-time status updates, in-app chat, notifications, and user activity tracking.",
     details:
       "A comprehensive asset management platform that allows employees to request, track, and return company assets. Features include real-time borrowing status, in-app messaging between requestors and approvers, push notifications for approval updates, and complete audit logging of all asset movements.",
-    screenshot: "https://placehold.co/800x500/1a1a2e/e94560?text=Item+Borrowing+System",
+    screenshot: "/projects/item-borrowing.png",
     github: "https://github.com/Chapunk1620/techLoan",
   },
   {
@@ -59,7 +59,7 @@ export const projects = [
       "POS system to record and manage company purchases with structured approval workflows and notification system.",
     details:
       "A digital point-of-sale and purchase management system that streamlines the entire procurement workflow. Includes product catalog management, shopping cart functionality, multi-level approval workflows, purchase order generation, and real-time notification updates for all stakeholders.",
-    screenshot: "https://placehold.co/800x500/1a1a2e/e94560?text=POS+System",
+    screenshot: "/projects/pos.png",
     github: "https://github.com/Chapunk1620/POSystem",
   },
   {
@@ -69,7 +69,7 @@ export const projects = [
       "Full-stack plant mapping system with interactive geolocation features and dynamic map visualization.",
     details:
       "An interactive geographic information system that maps and visualizes plant locations across a facility. Integrates mapping APIs to display interactive maps with plant markers, provides detailed plant information on click, and supports filtering and search functionality for easy navigation.",
-    screenshot: "https://placehold.co/800x500/1a1a2e/e94560?text=Plant+Mapping+System",
+    screenshot: "/projects/plant-mapping.png",
     github: null,
   },
   {
@@ -79,7 +79,7 @@ export const projects = [
       "BOM system to manage product components and material requirements, centralizing data for improved tracking.",
     details:
       "A centralized Bill of Materials management system that organizes product components, raw materials, and sub-assemblies. Features include hierarchical BOM structures, material requirement planning, cost tracking per component, version control for BOM revisions, and integration with inventory data.",
-    screenshot: "https://placehold.co/800x500/1a1a2e/e94560?text=BOM+System",
+    screenshot: "/projects/bom.png",
     github: "https://github.com/Chapunk1620/BOMSystem",
   },
   {
@@ -89,7 +89,7 @@ export const projects = [
       "Admin system digitizing employee form requests and time tracking with automated approval workflows.",
     details:
       "A digital transformation platform that replaced paper-based employee request forms and manual time tracking. Enables employees to submit various request types digitally, log working hours with automatic calculation, track approval status in real-time, and generates automated reports for HR and management.",
-    screenshot: "https://placehold.co/800x500/1a1a2e/e94560?text=Admin+Workflow+System",
+    screenshot: "/projects/admin-workflow.png",
     github: "https://github.com/Chapunk1620/administrativeSystem",
   },
 ];
