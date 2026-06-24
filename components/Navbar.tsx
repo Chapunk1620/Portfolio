@@ -54,12 +54,31 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center">
         <a href="#" className="text-xl font-bold tracking-tight">
           <span className="text-accent-red">&lt;</span>J<span className="text-accent-red">/</span>
         </a>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-6 ml-auto">
+          <ul className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className={`relative transition-colors duration-200 text-sm font-medium group ${
+                    activeSection === link.href.slice(1)
+                      ? "text-accent-red"
+                      : "text-text-muted hover:text-accent-red"
+                  }`}
+                >
+                  {link.label}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent-red transition-all duration-300 ${
+                    activeSection === link.href.slice(1) ? "w-full" : "w-0 group-hover:w-full"
+                  }`} />
+                </a>
+              </li>
+            ))}
+          </ul>
           <ThemeToggle />
           <button
             className="md:hidden text-2xl"
@@ -69,26 +88,6 @@ export default function Navbar() {
             {menuOpen ? "✕" : "☰"}
           </button>
         </div>
-
-        <ul className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`relative transition-colors duration-200 text-sm font-medium group ${
-                  activeSection === link.href.slice(1)
-                    ? "text-accent-red"
-                    : "text-text-muted hover:text-accent-red"
-                }`}
-              >
-                {link.label}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent-red transition-all duration-300 ${
-                  activeSection === link.href.slice(1) ? "w-full" : "w-0 group-hover:w-full"
-                }`} />
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
 
       <AnimatePresence>
