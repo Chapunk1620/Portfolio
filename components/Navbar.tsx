@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -58,26 +59,32 @@ export default function Navbar() {
           <span className="text-accent-red">&lt;</span>J<span className="text-accent-red">/</span>
         </a>
 
-        <button
-          className="md:hidden text-2xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <button
+            className="md:hidden text-2xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
 
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className={`transition-colors duration-200 text-sm font-medium ${
+                className={`relative transition-colors duration-200 text-sm font-medium group ${
                   activeSection === link.href.slice(1)
                     ? "text-accent-red"
                     : "text-text-muted hover:text-accent-red"
                 }`}
               >
                 {link.label}
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent-red transition-all duration-300 ${
+                  activeSection === link.href.slice(1) ? "w-full" : "w-0 group-hover:w-full"
+                }`} />
               </a>
             </li>
           ))}

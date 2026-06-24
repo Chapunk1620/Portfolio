@@ -6,6 +6,8 @@ import ScrollProgress from "@/components/ScrollProgress";
 import CursorGlow from "@/components/CursorGlow";
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
+import ThemeProvider from "@/components/ThemeProvider";
+import SkipToContent from "@/components/SkipToContent";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,18 +55,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`scroll-smooth dark ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <CursorGlow />
-        <ScrollProgress />
-        <Navbar />
-        <main>{children}</main>
-        <BackToTop />
-        <Footer />
+        <ThemeProvider>
+          <SkipToContent />
+          <CursorGlow />
+          <ScrollProgress />
+          <Navbar />
+          <main id="main-content">{children}</main>
+          <BackToTop />
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
