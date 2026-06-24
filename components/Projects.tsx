@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
 import { projects } from "@/lib/data";
+import Skeleton from "./Skeleton";
+import SkeletonWrapper from "./SkeletonWrapper";
 
 export default function Projects() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -25,19 +27,29 @@ export default function Projects() {
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={project.title}
-            title={project.title}
-            description={project.description}
-            tech={project.tech}
-            github={project.github}
-            index={index}
-            onClick={() => setSelectedIndex(index)}
-          />
-        ))}
-      </div>
+      <SkeletonWrapper
+        skeleton={
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} variant="card" />
+            ))}
+          </div>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={project.title}
+              title={project.title}
+              description={project.description}
+              tech={project.tech}
+              github={project.github}
+              index={index}
+              onClick={() => setSelectedIndex(index)}
+            />
+          ))}
+        </div>
+      </SkeletonWrapper>
 
       {selectedIndex !== null && (
         <ProjectModal

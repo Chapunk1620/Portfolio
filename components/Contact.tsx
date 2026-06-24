@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { personalInfo } from "@/lib/data";
+import Skeleton from "./Skeleton";
+import SkeletonWrapper from "./SkeletonWrapper";
 
 const links = [
   {
@@ -74,95 +76,115 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          <motion.form
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            onSubmit={handleSubmit}
-            className="space-y-4"
-          >
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="box" />
-
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              required
-              className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-              className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
-            />
-            <input
-              type="text"
-              name="subject"
-              placeholder="Subject"
-              required
-              className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
-            />
-            <textarea
-              name="message"
-              placeholder="Your Message"
-              required
-              rows={5}
-              className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm resize-none"
-            />
-            <button
-              type="submit"
-              className="w-full py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 transition-all duration-300 text-sm"
+        <SkeletonWrapper
+          skeleton={
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="space-y-4">
+                <Skeleton className="h-11 w-full rounded-button" />
+                <Skeleton className="h-11 w-full rounded-button" />
+                <Skeleton className="h-11 w-full rounded-button" />
+                <Skeleton className="h-32 w-full rounded-button" />
+                <Skeleton className="h-11 w-full rounded-button" />
+              </div>
+              <div className="flex flex-col justify-center gap-8 pl-4">
+                <div className="space-y-4">
+                  <Skeleton className="h-10 w-40" />
+                  <Skeleton className="h-10 w-40" />
+                </div>
+              </div>
+            </div>
+          }
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            <motion.form
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              onSubmit={handleSubmit}
+              className="space-y-4"
             >
-              {sent ? "✓ Message Sent!" : "Send Message"}
-            </button>
-          </motion.form>
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="box" />
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col items-center md:items-start justify-center gap-8"
-          >
-            <div className="space-y-4">
-              {[
-                { label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}` },
-                { label: "Phone", value: personalInfo.phone, href: `tel:${personalInfo.phone}` },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="block text-text-muted hover:text-accent-red transition-colors"
-                >
-                  <span className="text-xs font-mono text-accent-red block">{item.label}</span>
-                  <span className="text-sm">{item.value}</span>
-                </a>
-              ))}
-            </div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                required
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                required
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
+              />
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                required
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
+              />
+              <textarea
+                name="message"
+                placeholder="Your Message"
+                required
+                rows={5}
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm resize-none"
+              />
+              <button
+                type="submit"
+                className="w-full py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 transition-all duration-300 text-sm"
+              >
+                {sent ? "✓ Message Sent!" : "Send Message"}
+              </button>
+            </motion.form>
 
-            <div className="flex items-center gap-6">
-              {links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-text-muted hover:text-accent-red transition-colors duration-200 group"
-                  aria-label={link.label}
-                >
-                  <span className="group-hover:scale-110 transition-transform block">
-                    {link.icon}
-                  </span>
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex flex-col items-center md:items-start justify-center gap-8"
+            >
+              <div className="space-y-4">
+                {[
+                  { label: "Email", value: personalInfo.email, href: `mailto:${personalInfo.email}` },
+                  { label: "Phone", value: personalInfo.phone, href: `tel:${personalInfo.phone}` },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="block text-text-muted hover:text-accent-red transition-colors"
+                  >
+                    <span className="text-xs font-mono text-accent-red block">{item.label}</span>
+                    <span className="text-sm">{item.value}</span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-6">
+                {links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-muted hover:text-accent-red transition-colors duration-200 group"
+                    aria-label={link.label}
+                  >
+                    <span className="group-hover:scale-110 transition-transform block">
+                      {link.icon}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </SkeletonWrapper>
       </div>
     </section>
   );

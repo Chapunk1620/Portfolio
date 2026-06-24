@@ -27,6 +27,8 @@ import { FaJava, FaAws } from "react-icons/fa";
 import { DiMsqlServer } from "react-icons/di";
 import { VscDebugStart } from "react-icons/vsc";
 import type { IconType } from "react-icons";
+import Skeleton from "./Skeleton";
+import SkeletonWrapper from "./SkeletonWrapper";
 
 const iconMap: Record<string, IconType> = {
   JavaScript: SiJavascript,
@@ -95,50 +97,60 @@ export default function Skills() {
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {Object.entries(skills).map(([category, items], catIndex) => (
-          <motion.div
-            key={category}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-            className="bg-dark-surface rounded-card p-6"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider">
-                {category}
-              </h3>
-              <span className="text-xs font-mono text-text-muted">{proficiencies[category]}%</span>
-            </div>
-            <div className="h-1.5 rounded-full bg-dark mb-5 overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: `${proficiencies[category]}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className={`h-full rounded-full ${barColors[category]}`}
-              />
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {items.map((skill) => {
-                const Icon = iconMap[skill];
-                return (
-                  <span
-                    key={skill}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-full border transition-all duration-300 hover:scale-105 cursor-default ${
-                      categoryColors[category] || "bg-accent-red/10 text-accent-red border-accent-red/20"
-                    }`}
-                  >
-                    {Icon && <Icon className="text-sm" />}
-                    {skill}
-                  </span>
-                );
-              })}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      <SkeletonWrapper
+        skeleton={
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Skeleton key={i} className="h-48 rounded-card" />
+            ))}
+          </div>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Object.entries(skills).map(([category, items], catIndex) => (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
+              className="bg-dark-surface rounded-card p-6"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider">
+                  {category}
+                </h3>
+                <span className="text-xs font-mono text-text-muted">{proficiencies[category]}%</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-dark mb-5 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${proficiencies[category]}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                  className={`h-full rounded-full ${barColors[category]}`}
+                />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {items.map((skill) => {
+                  const Icon = iconMap[skill];
+                  return (
+                    <span
+                      key={skill}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-full border transition-all duration-300 hover:scale-105 cursor-default ${
+                        categoryColors[category] || "bg-accent-red/10 text-accent-red border-accent-red/20"
+                      }`}
+                    >
+                      {Icon && <Icon className="text-sm" />}
+                      {skill}
+                    </span>
+                  );
+                })}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </SkeletonWrapper>
     </section>
   );
 }

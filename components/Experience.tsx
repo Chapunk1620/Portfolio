@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { experiences } from "@/lib/data";
+import Skeleton from "./Skeleton";
+import SkeletonWrapper from "./SkeletonWrapper";
 
 interface TimelineItemProps {
   company: string;
@@ -56,11 +58,33 @@ export default function Experience() {
           </h2>
         </motion.div>
 
-        <div>
-          {experiences.map((exp, index) => (
-            <TimelineItem key={exp.company} {...exp} index={index} />
-          ))}
-        </div>
+        <SkeletonWrapper
+          skeleton={
+            <div className="space-y-8">
+              {[1, 2].map((i) => (
+                <div key={i} className="flex gap-4">
+                  <Skeleton className="w-4 h-4 rounded-full flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <Skeleton className="h-3 w-32 mb-2" />
+                    <Skeleton className="h-5 w-48 mb-1" />
+                    <Skeleton className="h-4 w-36 mb-3" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-3 w-full" />
+                      <Skeleton className="h-3 w-5/6" />
+                      <Skeleton className="h-3 w-4/6" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          }
+        >
+          <div>
+            {experiences.map((exp, index) => (
+              <TimelineItem key={exp.company} {...exp} index={index} />
+            ))}
+          </div>
+        </SkeletonWrapper>
       </div>
     </section>
   );

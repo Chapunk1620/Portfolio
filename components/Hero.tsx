@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { personalInfo } from "@/lib/data";
+import Skeleton from "./Skeleton";
+import SkeletonWrapper from "./SkeletonWrapper";
 
 const ParticleBackground = dynamic(() => import("./ParticleBackground"), { ssr: false });
 
@@ -56,65 +58,80 @@ export default function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <ParticleBackground />
 
-      <div className="relative z-10 text-center px-6 max-w-4xl">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-accent-red font-mono text-sm mb-4 tracking-widest uppercase"
-        >
-          Hello, I&apos;m
-        </motion.p>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight"
-        >
-          {personalInfo.name}
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-xl md:text-2xl text-text-muted mb-4 font-mono"
-        >
-          <span className="text-accent-red">&lt;</span>{" "}
-          <Typewriter text={personalInfo.title} speed={60} />{" "}
-          <span className="text-accent-red">/&gt;</span>
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-text-muted max-w-xl mx-auto mb-10"
-        >
-          {personalInfo.subtitle}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a
-            href="#projects"
-            className="px-8 py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 transition-all duration-300 animate-pulse-glow"
+      <SkeletonWrapper
+        skeleton={
+          <div className="text-center px-6 max-w-4xl mx-auto pt-32">
+            <Skeleton className="h-3 w-24 mx-auto mb-6" />
+            <Skeleton className="h-12 w-3/4 mx-auto mb-6" />
+            <Skeleton className="h-6 w-1/2 mx-auto mb-4" />
+            <Skeleton className="h-4 w-2/3 mx-auto mb-10" />
+            <div className="flex justify-center gap-4">
+              <Skeleton className="h-11 w-32 rounded-button" />
+              <Skeleton className="h-11 w-32 rounded-button" />
+            </div>
+          </div>
+        }
+      >
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-accent-red font-mono text-sm mb-4 tracking-widest uppercase"
           >
-            View My Work
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3 border border-text-muted/30 text-text-primary rounded-button font-medium hover:border-accent-red hover:text-accent-red transition-all duration-300"
+            Hello, I&apos;m
+          </motion.p>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight"
           >
-            Get In Touch
-          </a>
-        </motion.div>
-      </div>
+            {personalInfo.name}
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-xl md:text-2xl text-text-muted mb-4 font-mono"
+          >
+            <span className="text-accent-red">&lt;</span>{" "}
+            <Typewriter text={personalInfo.title} speed={60} />{" "}
+            <span className="text-accent-red">/&gt;</span>
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="text-text-muted max-w-xl mx-auto mb-10"
+          >
+            {personalInfo.subtitle}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="#projects"
+              className="px-8 py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 transition-all duration-300 animate-pulse-glow"
+            >
+              View My Work
+            </a>
+            <a
+              href="#contact"
+              className="px-8 py-3 border border-text-muted/30 text-text-primary rounded-button font-medium hover:border-accent-red hover:text-accent-red transition-all duration-300"
+            >
+              Get In Touch
+            </a>
+          </motion.div>
+        </div>
+      </SkeletonWrapper>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
