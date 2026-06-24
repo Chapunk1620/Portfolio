@@ -28,7 +28,7 @@ export default function ProjectCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group bg-dark-surface rounded-card p-6 border border-transparent hover:border-accent-red/20 transition-colors duration-300 hover:shadow-[0_0_30px_rgba(233,69,96,0.15)] cursor-pointer"
+      className="group bg-dark-surface rounded-card p-6 border border-transparent hover:border-accent-red/20 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(233,69,96,0.15)] cursor-pointer"
       style={{ transition: "transform 0.15s ease-out" }}
       ref={tilt.ref}
       onMouseMove={tilt.onMouseMove}
@@ -45,7 +45,7 @@ export default function ProjectCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="text-text-muted hover:text-accent-red transition-colors"
+            className="text-text-muted hover:text-accent-red active:scale-90 transition-all duration-200"
             aria-label={`View ${title} on GitHub`}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

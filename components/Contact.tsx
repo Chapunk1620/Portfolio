@@ -112,32 +112,32 @@ export default function Contact() {
                 name="name"
                 placeholder="Your Name"
                 required
-                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark transition-colors text-sm"
               />
               <input
                 type="email"
                 name="email"
                 placeholder="Your Email"
                 required
-                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark transition-colors text-sm"
               />
               <input
                 type="text"
                 name="subject"
                 placeholder="Subject"
                 required
-                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm"
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark transition-colors text-sm"
               />
               <textarea
                 name="message"
                 placeholder="Your Message"
                 required
                 rows={5}
-                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red transition-colors text-sm resize-none"
+                className="w-full px-4 py-3 bg-dark border border-dark-mid/30 rounded-button text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-accent-red focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark transition-colors text-sm resize-none"
               />
               <button
                 type="submit"
-                className="w-full py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 transition-all duration-300 text-sm"
+                className="w-full py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark transition-all duration-300 text-sm"
               >
                 {sent ? "✓ Message Sent!" : "Send Message"}
               </button>
