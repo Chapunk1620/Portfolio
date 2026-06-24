@@ -6,7 +6,7 @@
   --color-bg-primary: 250, 248, 245;
   --color-bg-surface: 255, 255, 255;
   --color-text-primary: 45, 45, 45;
-  --color-text-muted: 119, 119, 119;
+  --color-text-muted: 92, 92, 92;
   --color-accent-red: 194, 58, 75;
 }
 
@@ -39,10 +39,11 @@ body {
   @apply bg-dark;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-dark-surface rounded-full;
+  background-color: rgba(128, 128, 128, 0.4);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: color-mix(in srgb, var(--color-accent-red) 30%, transparent);
+  background-color: rgba(var(--color-accent-red), 0.4);
 }
 
 @keyframes pulseGlow {
