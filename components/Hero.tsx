@@ -1,70 +1,120 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { MotionConfig, motion, useReducedMotion } from "framer-motion";
 import { personalInfo } from "@/lib/data";
 import Skeleton from "./Skeleton";
 import SkeletonWrapper from "./SkeletonWrapper";
 
 const ParticleBackground = dynamic(() => import("./ParticleBackground"), { ssr: false });
 
-function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
+const impactStatements = [
+  "replace manual workflows",
+  "scale to real-world needs",
+  "turn messy processes into products",
+  "ship on time, every time",
+];
+
+const codeSample = `async function handleRequest(req: Request) {
+  const data = await validateInput(req.body);
+  const result = await processWorkflow(data);
+  return Response.json({ success: true, result });
+}`;
+
+function CountUp({ end, suffix = "", reducedMotion = false }: { end: number; suffix?: string; reducedMotion?: boolean }) {
+  const [count, setCount] = useState(reducedMotion ? end : 0);
 
   useEffect(() => {
     let start = 0;
     const duration = 1500;
     const step = Math.ceil(end / (duration / 16));
-    const timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       start += step;
       if (start >= end) {
         setCount(end);
-        clearInterval(timer);
+        window.clearInterval(timer);
       } else {
         setCount(start);
       }
     }, 16);
-    return () => clearInterval(timer);
-  }, [end]);
+    return () => window.clearInterval(timer);
+  }, [end, reducedMotion]);
 
   return <>{count}{suffix}</>;
 }
 
-function Typewriter({ text, speed = 50 }: { text: string; speed?: number }) {
-  const [displayed, setDisplayed] = useState("");
+function RotatingImpactStatement({ statements }: { statements: string[] }) {
+  const [index, setIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    let i = 0;
-    setDisplayed("");
-    const timer = setInterval(() => {
-      i++;
-      setDisplayed(text.slice(0, i));
-      if (i >= text.length) clearInterval(timer);
-    }, speed);
-    return () => clearInterval(timer);
-  }, [text, speed]);
+    if (prefersReducedMotion) return;
+
+    const timer = window.setInterval(() => {
+      setIndex((current) => (current + 1) % statements.length);
+    }, 3000);
+    return () => window.clearInterval(timer);
+  }, [prefersReducedMotion, statements.length]);
 
   return (
-    <span>
-      {displayed}
-      <span className="animate-pulse text-accent-red">|</span>
-    </span>
+    <motion.span
+      key={statements[index]}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35 }}
+      className="inline-block text-accent-red"
+    >
+      {statements[index]}
+    </motion.span>
+  );
+}
+
+function CodeSnippet() {
+  const [displayed, setDisplayed] = useState("");
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setDisplayed(codeSample);
+      return;
+    }
+
+    let index = 0;
+    const timer = window.setInterval(() => {
+      index += 1;
+      setDisplayed(codeSample.slice(0, index));
+      if (index >= codeSample.length) window.clearInterval(timer);
+    }, 24);
+    return () => window.clearInterval(timer);
+  }, [prefersReducedMotion]);
+
+  return (
+    <pre
+      aria-label="Example TypeScript request handler"
+      className="hero-code mt-8 mx-auto max-w-2xl overflow-x-auto rounded-card border border-text-muted/20 bg-dark-surface/80 p-4 text-left text-xs leading-relaxed text-text-muted shadow-xl backdrop-blur-sm sm:text-sm"
+    >
+      <code>{displayed}{!prefersReducedMotion && <span className="animate-pulse text-accent-red" aria-hidden="true">▋</span>}</code>
+    </pre>
   );
 }
 
 export default function Hero() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <MotionConfig reducedMotion={prefersReducedMotion ? "always" : "never"}>
+      <section className="relative min-h-screen overflow-hidden px-6 py-32 sm:py-36">
       <ParticleBackground />
 
       <SkeletonWrapper
         skeleton={
-          <div className="text-center px-6 max-w-4xl mx-auto pt-32">
-            <Skeleton className="h-3 w-24 mx-auto mb-6" />
-            <Skeleton className="h-12 w-3/4 mx-auto mb-6" />
-            <Skeleton className="h-6 w-1/2 mx-auto mb-4" />
-            <Skeleton className="h-4 w-2/3 mx-auto mb-10" />
+          <div className="mx-auto max-w-4xl px-6 text-center">
+            <Skeleton className="mx-auto mb-6 h-3 w-24" />
+            <Skeleton className="mx-auto mb-6 h-12 w-3/4" />
+            <Skeleton className="mx-auto mb-4 h-6 w-1/2" />
+            <Skeleton className="mx-auto mb-10 h-4 w-2/3" />
             <div className="flex justify-center gap-4">
               <Skeleton className="h-11 w-32 rounded-button" />
               <Skeleton className="h-11 w-32 rounded-button" />
@@ -72,12 +122,12 @@ export default function Hero() {
           </div>
         }
       >
-        <div className="relative z-10 text-center px-6 max-w-4xl">
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-accent-red font-mono text-sm mb-4 tracking-widest uppercase"
+            className="mb-4 font-mono text-sm uppercase tracking-widest text-accent-red"
           >
             Hello, I&apos;m
           </motion.p>
@@ -86,7 +136,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+            className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl md:text-7xl"
           >
             {personalInfo.name}
           </motion.h1>
@@ -94,19 +144,26 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-xl md:text-2xl text-text-muted mb-4 font-mono"
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mb-6 font-mono text-xl text-text-muted md:text-2xl"
           >
-            <span className="text-accent-red">&lt;</span>{" "}
-            <Typewriter text={personalInfo.title} speed={60} />{" "}
-            <span className="text-accent-red">/&gt;</span>
+            <span className="text-accent-red">&lt;</span> {personalInfo.title} <span className="text-accent-red">/&gt;</span>
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mb-4 text-2xl font-semibold sm:text-3xl"
+          >
+            I build systems that <RotatingImpactStatement statements={impactStatements} />
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="text-text-muted max-w-xl mx-auto mb-10"
+            transition={{ duration: 0.6, delay: 0.65 }}
+            className="mx-auto mb-6 max-w-xl text-text-muted"
           >
             {personalInfo.subtitle}
           </motion.p>
@@ -114,21 +171,33 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.9 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent-red/30 bg-accent-red/10 px-4 py-2 text-sm text-text-primary"
           >
-            <a
-              href="#projects"
-              className="px-8 py-3 bg-accent-red text-white rounded-button font-medium hover:bg-accent-red/90 transition-all duration-300 animate-pulse-glow"
-            >
+            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" aria-hidden="true" />
+            {personalInfo.availability}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          >
+            <a href="#projects" className="animate-pulse-glow rounded-button bg-accent-red px-8 py-3 font-medium text-white transition-all duration-300 hover:bg-accent-red/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark">
               View My Work
             </a>
-            <a
-              href="#contact"
-              className="px-8 py-3 border border-text-muted/30 text-text-primary rounded-button font-medium hover:border-accent-red hover:text-accent-red transition-all duration-300"
-            >
-              Get In Touch
+            <a href="/resume.pdf" download className="rounded-button border border-text-muted/30 px-8 py-3 font-medium text-text-primary transition-all duration-300 hover:border-accent-red hover:text-accent-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark">
+              Download Resume
             </a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.05 }}
+          >
+            <CodeSnippet />
           </motion.div>
         </div>
       </SkeletonWrapper>
@@ -137,24 +206,19 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 1.2 }}
-        className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-14 mt-10 md:mt-16"
+        className="relative z-10 mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-14"
       >
         {[
           { label: "Projects", value: 5 },
           { label: "Experience", value: "2+", suffix: " yrs" },
           { label: "Tech Stack", value: 20, suffix: "+" },
+          { label: "Kaizen Win", value: "1" },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
-            <div className="text-2xl md:text-3xl font-bold text-accent-red font-mono">
-              {typeof stat.value === "number" ? (
-                <CountUp end={stat.value} suffix={stat.suffix || ""} />
-              ) : (
-                stat.value
-              )}
+            <div className="font-mono text-2xl font-bold text-accent-red md:text-3xl">
+              {typeof stat.value === "number" ? <CountUp end={stat.value} suffix={stat.suffix || ""} reducedMotion={Boolean(prefersReducedMotion)} /> : `${stat.value}${stat.suffix || ""}`}
             </div>
-            <div className="text-xs text-text-muted mt-1 uppercase tracking-wider">
-              {stat.label}
-            </div>
+            <div className="mt-1 text-xs uppercase tracking-wider text-text-muted">{stat.label}</div>
           </div>
         ))}
       </motion.div>
@@ -166,13 +230,15 @@ export default function Hero() {
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-text-muted text-2xl"
+          animate={prefersReducedMotion ? undefined : { y: [0, 8, 0] }}
+          transition={prefersReducedMotion ? undefined : { duration: 2, repeat: Infinity }}
+          className="text-2xl text-text-muted"
+          aria-hidden="true"
         >
           ↓
         </motion.div>
       </motion.div>
-    </section>
+      </section>
+    </MotionConfig>
   );
 }

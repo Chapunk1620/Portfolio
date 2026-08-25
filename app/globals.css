@@ -8,6 +8,7 @@
   --color-text-primary: 45 45 45;
   --color-text-muted: 92 92 92;
   --color-accent-red: 194 58 75;
+  --color-status-success: 24 110 74;
 }
 
 :root.dark {
@@ -16,6 +17,7 @@
   --color-text-primary: 232 232 232;
   --color-text-muted: 136 136 136;
   --color-accent-red: 233 69 96;
+  --color-status-success: 91 214 155;
 }
 
 html {
@@ -25,6 +27,11 @@ html {
 body {
   @apply bg-dark text-text-primary font-sans;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid rgb(var(--color-accent-red));
+  outline-offset: 3px;
 }
 
 ::selection {
@@ -64,5 +71,77 @@ body {
   to {
     transform: scale(4);
     opacity: 0;
+  }
+}
+
+.hero-code {
+  min-height: 8.5rem;
+}
+
+.contact-action-card {
+  @apply flex min-h-36 flex-col justify-center gap-2 rounded-card border border-dark-mid/30 bg-dark-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent-red/50 hover:shadow-[0_12px_30px_rgb(var(--color-accent-red)/0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red;
+}
+
+.contact-action-icon {
+  @apply mb-1 text-2xl text-accent-red;
+}
+
+.contact-action-label {
+  @apply font-semibold text-text-primary;
+}
+
+.contact-field {
+  @apply relative;
+}
+
+.contact-field label {
+  @apply pointer-events-none absolute left-4 top-4 origin-left text-sm text-text-muted transition-all duration-200 peer-focus:-translate-y-2 peer-focus:scale-75 peer-focus:text-accent-red peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:scale-75;
+}
+
+.contact-field-status {
+  @apply pointer-events-none absolute right-4 top-4 text-sm;
+  color: rgb(var(--color-status-success));
+}
+
+.footer-social {
+  @apply flex h-9 w-9 items-center justify-center rounded-full border border-dark-mid/40 text-xs font-semibold text-text-muted transition-colors hover:border-accent-red hover:text-accent-red focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red;
+}
+
+.section-divider {
+  min-height: 3rem;
+}
+
+.command-palette {
+  animation: paletteIn 160ms ease-out;
+}
+
+@keyframes paletteIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-code {
+    min-height: auto;
+  }
+
+  .command-palette {
+    animation: none;
+  }
+
+  .section-divider {
+    min-height: 2rem;
   }
 }

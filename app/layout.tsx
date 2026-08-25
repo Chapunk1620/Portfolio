@@ -8,6 +8,7 @@ import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
 import SkipToContent from "@/components/SkipToContent";
+import CommandPalette from "@/components/CommandPalette";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,6 +74,7 @@ export default function RootLayout({
           <CursorGlow />
           <ScrollProgress />
           <Navbar />
+          <CommandPalette />
           <main id="main-content">{children}</main>
           <BackToTop />
           <Footer />

@@ -1,4 +1,8 @@
-export default function Skeleton({ className = "", variant = "text" }: { className?: string; variant?: "text" | "card" | "circle" }) {
+export default function Skeleton({ className = "", variant = "text" }: { className?: string; variant?: "text" | "bar" | "card" | "circle" }) {
+  if (variant === "bar") {
+    return <div aria-hidden="true" className={`rounded bg-text-muted/10 animate-pulse-skeleton ${className}`} />;
+  }
+
   if (variant === "circle") {
     return (
       <div

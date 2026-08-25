@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
+import { CommandPaletteHint } from "./CommandPalette";
 
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
+  { label: "GitHub", href: "#github" },
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
@@ -55,7 +57,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center">
-        <a href="#" className="text-xl font-bold tracking-tight">
+        <a href="#" className="rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red">
           <span className="text-accent-red">&lt;</span>J<span className="text-accent-red">/</span>
         </a>
 
@@ -65,7 +67,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className={`relative transition-colors duration-200 text-sm font-medium group ${
+                  className={`relative rounded-sm transition-colors duration-200 text-sm font-medium group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red ${
                     activeSection === link.href.slice(1)
                       ? "text-accent-red"
                       : "text-text-muted hover:text-accent-red"
@@ -79,11 +81,14 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          <CommandPaletteHint />
           <ThemeToggle />
           <button
-            className="md:hidden text-2xl"
+            className="rounded-md text-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red focus-visible:ring-offset-2 focus-visible:ring-offset-dark md:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
           >
             {menuOpen ? "✕" : "☰"}
           </button>
@@ -96,6 +101,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
+            id="mobile-navigation"
             className="md:hidden bg-dark-surface/95 backdrop-blur-md"
           >
             <ul className="flex flex-col px-6 pb-6 gap-4">
@@ -104,7 +110,7 @@ export default function Navbar() {
                   <a
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className={`block py-2 transition-colors text-sm font-medium ${
+                    className={`block rounded-sm py-2 transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-red ${
                       activeSection === link.href.slice(1)
                         ? "text-accent-red"
                         : "text-text-muted hover:text-accent-red"
