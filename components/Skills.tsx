@@ -25,7 +25,16 @@ import {
 } from "react-icons/si";
 import { FaJava, FaAws } from "react-icons/fa";
 import { DiMsqlServer } from "react-icons/di";
-import { VscDebugStart } from "react-icons/vsc";
+import { VscDebugStart, VscTerminalPowershell } from "react-icons/vsc";
+import {
+  SiOllama,
+  SiGooglegemini,
+  SiClaude,
+  SiAnthropic,
+  SiOpenai,
+  SiRobotframework,
+  SiN8N,
+} from "react-icons/si";
 import type { IconType } from "react-icons";
 import Skeleton from "./Skeleton";
 import SkeletonWrapper from "./SkeletonWrapper";
@@ -54,31 +63,33 @@ const iconMap: Record<string, IconType> = {
   Docker: SiDocker,
   AWS: FaAws,
   "CI/CD": VscDebugStart,
+
+  // AI Tools
+  Ollama: SiOllama,
+  Gemini: SiGooglegemini,
+  "Claude Code": SiClaude,
+  Antigravity: SiAnthropic,
+  Pi: SiRobotframework,
+  OpenCode: VscTerminalPowershell,
+  ChatGPT: SiOpenai,
+
+  // Automation Tools
+  n8n: SiN8N,
 };
 
-const categoryColors: Record<string, string> = {
-  Languages: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  Frontend: "bg-green-500/10 text-green-400 border-green-500/20",
-  Backend: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  Databases: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-  "DevOps & Tools": "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+const categoryTextColors: Record<string, string> = {
+  Languages: "text-blue-400",
+  Frontend: "text-green-400",
+  Backend: "text-purple-400",
+  Databases: "text-yellow-400",
+  "DevOps & Tools": "text-cyan-400",
+  "AI Tools": "text-fuchsia-400",
+  "Automation": "text-orange-400",
 };
 
-const proficiencies: Record<string, number> = {
-  Languages: 90,
-  Frontend: 95,
-  Backend: 85,
-  Databases: 80,
-  "DevOps & Tools": 75,
-};
 
-const barColors: Record<string, string> = {
-  Languages: "bg-blue-500",
-  Frontend: "bg-green-500",
-  Backend: "bg-purple-500",
-  Databases: "bg-yellow-500",
-  "DevOps & Tools": "bg-cyan-500",
-};
+
+const skillEntries = Object.entries(skills);
 
 export default function Skills() {
   return (
@@ -99,51 +110,59 @@ export default function Skills() {
 
       <SkeletonWrapper
         skeleton={
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <Skeleton key={i} className="h-48 rounded-card" />
+          <div className="space-y-8">
+            {Object.keys(skills).map((category) => (
+              <div key={category}>
+                <Skeleton className="h-4 w-28 mb-3 rounded" />
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3">
+                  {skills[category as keyof typeof skills].map((_, i) => (
+                    <Skeleton key={i} className="h-24 rounded-card" />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         }
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Object.entries(skills).map(([category, items], catIndex) => (
+        <div className="space-y-10">
+          {skillEntries.map(([category, items], catIndex) => (
             <motion.div
               key={category}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-              className="bg-dark-surface rounded-card p-6"
+              transition={{ duration: 0.5, delay: catIndex * 0.08 }}
             >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider">
-                  {category}
-                </h3>
-                <span className="text-xs font-mono text-text-muted">{proficiencies[category]}%</span>
-              </div>
-              <div className="h-1.5 rounded-full bg-dark mb-5 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${proficiencies[category]}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                  className={`h-full rounded-full ${barColors[category]}`}
-                />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {items.map((skill) => {
+              <h3
+                className={`text-xs font-semibold uppercase tracking-widest font-mono mb-4 ${
+                  categoryTextColors[category] || "text-accent-red"
+                }`}
+              >
+                {category}
+              </h3>
+              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3">
+                {items.map((skill, i) => {
                   const Icon = iconMap[skill];
                   return (
-                    <span
+                    <motion.div
                       key={skill}
-                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono rounded-full border transition-all duration-300 hover:scale-105 cursor-default ${
-                        categoryColors[category] || "bg-accent-red/10 text-accent-red border-accent-red/20"
-                      }`}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.35,
+                        delay: catIndex * 0.08 + i * 0.04,
+                        ease: "easeOut",
+                      }}
+                      className="group flex flex-col items-center justify-center gap-2.5 bg-dark-surface border border-transparent rounded-card py-6 px-3 cursor-default transition-all duration-300 hover:-translate-y-1 hover:border-accent-red/40 hover:shadow-[0_8px_24px_rgb(var(--color-accent-red)/0.12)]"
                     >
-                      {Icon && <Icon className="text-sm" />}
-                      {skill}
-                    </span>
+                      {Icon && (
+                        <Icon className="text-4xl text-text-muted transition-colors duration-300 group-hover:text-accent-red" />
+                      )}
+                      <span className="text-xs font-mono text-text-primary text-center leading-tight">
+                        {skill}
+                      </span>
+                    </motion.div>
                   );
                 })}
               </div>

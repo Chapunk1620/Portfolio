@@ -14,6 +14,16 @@ export const skills = {
   Backend: ["Node.js", "Express", "Django", "Laravel"],
   Databases: ["PostgreSQL", "SQLite", "MongoDB", "SQL Server", "MySQL"],
   "DevOps & Tools": ["Git", "Docker", "AWS", "CI/CD"],
+  "AI Tools": [
+    "Ollama",
+    "Gemini",
+    "Claude Code",
+    "Antigravity",
+    "Pi",
+    "OpenCode",
+    "ChatGPT",
+  ],
+  "Automation": ["n8n"],
 };
 
 export const experiences = [
